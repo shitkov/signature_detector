@@ -1,3 +1,4 @@
+import os
 import PIL
 from PIL import Image, ImageDraw, ImageOps
 
@@ -33,3 +34,26 @@ def image_handler(image, fixed_size = 1920):
         )
     image.convert('RGB')
     return image
+
+def resizer(file_path, file_name, save_path):
+    image = Image.open(file_path)
+    image = image_handler(image)
+    image.save(save_path + file_name + '.jpg', optimize=True, quality=100)
+
+def create_dataset(path_dataset, path_save):
+    try:
+        os.mkdir(path_save)
+    except:
+        pass
+    folders = os.listdir(path_dataset)
+
+    for folder in folders:
+        os.mkdir(path_save + '/' + folder)
+        images = [file for file in os.listdir(path_dataset + folder) if file.endswith(('jpeg', 'png', 'jpg'))]
+        for i in images:
+            filename = i.split('.')[0]
+            resizer(
+                file_path=path_dataset+folder+'/'+i,
+                file_name=filename,
+                save_path=path_save + '/' + folder + '/'
+            )
