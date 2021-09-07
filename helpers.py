@@ -2,7 +2,7 @@ import PIL
 from PIL import Image, ImageDraw
 
 def draw_bboxs(img_path, preds_list):
-	image = Image.open(img_path)
+    image = Image.open(img_path)
     image = image.convert('RGB')
     draw = ImageDraw.Draw(image)
     for box in preds_list:
