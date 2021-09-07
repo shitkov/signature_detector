@@ -10,7 +10,7 @@ from utils.augmentations import letterbox
 
 @torch.no_grad()
 def predict(
-		weights='yolov5s.pt',  # model.pt path(s)
+        weights='yolov5s.pt',  # model.pt path(s)
         source='data/images',  # file/dir/URL/glob, 0 for webcam
         imgsz=[1024, 1024],  # inference size (pixels, WxH)
         conf_thres=0.25,  # confidence threshold
