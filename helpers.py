@@ -1,5 +1,5 @@
 import PIL
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageOps
 
 def draw_bboxs(image, preds_list):
     image = image.convert('RGB')
@@ -21,4 +21,15 @@ def resizer(image, fixed_size=1280, grayscale=True):
         )
     if grayscale:
         resized_image = resized_image.convert('L') 
-    return resized_image
+    return resized_image_gray
+
+def image_handler(image, fixed_size = 1920):
+    image = ImageOps.autocontrast(image.convert('L'), cutoff = 5, ignore = 5)
+    w, h = image.size
+    percent = float(fixed_size / float(min(w, h)))
+    image = image.resize(
+            (int(w * percent), int(h * percent)),
+            PIL.Image.NEAREST
+        )
+    image.convert('RGB')
+    return image
